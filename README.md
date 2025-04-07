@@ -1,33 +1,86 @@
-This is a [Plasmo extension](https://docs.plasmo.com/) project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
+# Redirect Me
 
-## Getting Started
+A browser extension that allows users to create and manage rules for redirecting HTTP(S) requests based on URL patterns and transformations.
 
-First, run the development server:
+## Features
 
-```bash
-pnpm dev
-# or
-npm run dev
+- Create, edit, and delete redirection rules
+- Define complex URL patterns using regular expressions
+- Apply multiple transformations to matched URL parts
+- Toggle rules on/off easily
+- Simple and intuitive user interface
+
+## Installation
+
+1. Clone this repository
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
+3. Build the extension:
+   ```bash
+   pnpm build
+   ```
+4. Load the extension in your browser:
+   - Chrome: Go to `chrome://extensions/`, enable "Developer mode", and click "Load unpacked"
+   - Firefox: Go to `about:debugging`, click "This Firefox", and click "Load Temporary Add-on"
+
+## Usage
+
+### Creating a Rule
+
+1. Click the extension icon to open the popup
+2. Click "Manage Rules" to open the options page
+3. Click "Add New Rule"
+4. Fill in the rule details:
+   - Name: A descriptive name for the rule
+   - Description: Optional description of what the rule does
+   - Input Pattern: Regular expression to match URLs
+   - Output Pattern: Template for the new URL (use $1, $2, etc. for capture groups)
+   - Transformation Rules: Optional transformations to apply to matched parts
+
+### Example Rule
+
+To redirect Google Translate URLs to their original source:
+
+```json
+{
+  "name": "Avoid Google Translate Website",
+  "description": "Redirect google translate website to original website",
+  "inputPattern": "https://(.*).translate.goog/(.*)",
+  "outputPattern": "https://$1/$2",
+  "transformationRules": [
+    {
+      "type": "ReplaceAll",
+      "searchValue": "-",
+      "replaceValue": ".",
+      "target": 1
+    },
+    {
+      "type": "ReplaceAll",
+      "searchValue": "..",
+      "replaceValue": "-",
+      "target": 1
+    }
+  ]
+}
 ```
 
-Open your browser and load the appropriate development build. For example, if you are developing for the chrome browser, using manifest v3, use: `build/chrome-mv3-dev`.
-
-You can start editing the popup by modifying `popup.tsx`. It should auto-update as you make changes. To add an options page, simply add a `options.tsx` file to the root of the project, with a react component default exported. Likewise to add a content page, add a `content.ts` file to the root of the project, importing some module and do some logic, then reload the extension on your browser.
-
-For further guidance, [visit our Documentation](https://docs.plasmo.com/)
-
-## Making production build
-
-Run the following:
-
-```bash
-pnpm build
-# or
-npm run build
+This rule will transform:
+```
+https://docs-coqui-ai.translate.goog/en/latest/
+```
+into:
+```
+https://docs.coqui.ai/en/latest/
 ```
 
-This should create a production bundle for your extension, ready to be zipped and published to the stores.
+## Development
 
-## Submit to the webstores
+- `pnpm dev`: Start development server
+- `pnpm build`: Build extension for production
+- `pnpm package`: Create a package for distribution
 
-The easiest way to deploy your Plasmo extension is to use the built-in [bpp](https://bpp.browser.market) GitHub action. Prior to using this action however, make sure to build your extension and upload the first version to the store to establish the basic credentials. Then, simply follow [this setup instruction](https://docs.plasmo.com/framework/workflows/submit) and you should be on your way for automated submission!
+## License
+
+MIT
