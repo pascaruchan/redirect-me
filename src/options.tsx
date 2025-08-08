@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
+
 import type { Rule, TransformationRule } from "./types"
 import { TransformationType } from "./types"
 import {
-  getRules,
   addRule,
-  updateRule,
   deleteRule,
-  toggleRule
+  getRules,
+  toggleRule,
+  updateRule
 } from "./utils/ruleManager"
 
 function IndexOptions() {
@@ -108,7 +109,9 @@ function IndexOptions() {
 
     setEditingRule({
       ...editingRule,
-      transformationRules: editingRule.transformationRules.filter((_, i) => i !== index)
+      transformationRules: editingRule.transformationRules.filter(
+        (_, i) => i !== index
+      )
     })
   }
 
@@ -128,16 +131,16 @@ function IndexOptions() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center"
-          }}
-        >
+          }}>
           <div
             style={{
               backgroundColor: "white",
               padding: "24px",
               borderRadius: "8px",
-              width: "600px"
-            }}
-          >
+              width: "600px",
+              maxHeight: "80vh",
+              overflowY: "auto"
+            }}>
             <h2>{editingRule.id ? "Edit Rule" : "New Rule"}</h2>
             <div style={{ marginBottom: "16px" }}>
               <label style={{ display: "block", marginBottom: "8px" }}>
@@ -148,7 +151,11 @@ function IndexOptions() {
                   onChange={(e) =>
                     setEditingRule({ ...editingRule, name: e.target.value })
                   }
-                  style={{ width: "100%", padding: "8px" }}
+                  style={{
+                    width: "100%",
+                    padding: "8px",
+                    boxSizing: "border-box"
+                  }}
                 />
               </label>
             </div>
@@ -158,9 +165,17 @@ function IndexOptions() {
                 <textarea
                   value={editingRule.description}
                   onChange={(e) =>
-                    setEditingRule({ ...editingRule, description: e.target.value })
+                    setEditingRule({
+                      ...editingRule,
+                      description: e.target.value
+                    })
                   }
-                  style={{ width: "100%", padding: "8px", minHeight: "60px" }}
+                  style={{
+                    width: "100%",
+                    padding: "8px",
+                    minHeight: "60px",
+                    boxSizing: "border-box"
+                  }}
                 />
               </label>
             </div>
@@ -171,9 +186,16 @@ function IndexOptions() {
                   type="text"
                   value={editingRule.inputPattern}
                   onChange={(e) =>
-                    setEditingRule({ ...editingRule, inputPattern: e.target.value })
+                    setEditingRule({
+                      ...editingRule,
+                      inputPattern: e.target.value
+                    })
                   }
-                  style={{ width: "100%", padding: "8px" }}
+                  style={{
+                    width: "100%",
+                    padding: "8px",
+                    boxSizing: "border-box"
+                  }}
                 />
               </label>
             </div>
@@ -184,9 +206,16 @@ function IndexOptions() {
                   type="text"
                   value={editingRule.outputPattern}
                   onChange={(e) =>
-                    setEditingRule({ ...editingRule, outputPattern: e.target.value })
+                    setEditingRule({
+                      ...editingRule,
+                      outputPattern: e.target.value
+                    })
                   }
-                  style={{ width: "100%", padding: "8px" }}
+                  style={{
+                    width: "100%",
+                    padding: "8px",
+                    boxSizing: "border-box"
+                  }}
                 />
               </label>
             </div>
@@ -201,14 +230,16 @@ function IndexOptions() {
                     padding: "16px",
                     marginBottom: "16px",
                     borderRadius: "4px"
-                  }}
-                >
-                  <div style={{ display: "flex", justifyContent: "space-between" }}>
+                  }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between"
+                    }}>
                     <h4>Rule {index + 1}</h4>
                     <button
                       onClick={() => removeTransformationRule(index)}
-                      style={{ color: "red" }}
-                    >
+                      style={{ color: "red" }}>
                       Remove
                     </button>
                   </div>
@@ -224,8 +255,7 @@ function IndexOptions() {
                             e.target.value as TransformationType
                           )
                         }
-                        style={{ width: "100%", padding: "8px" }}
-                      >
+                        style={{ width: "100%", padding: "8px" }}>
                         {Object.values(TransformationType).map((type) => (
                           <option key={type} value={type}>
                             {type}
@@ -241,9 +271,17 @@ function IndexOptions() {
                         type="text"
                         value={rule.searchValue}
                         onChange={(e) =>
-                          updateTransformationRule(index, "searchValue", e.target.value)
+                          updateTransformationRule(
+                            index,
+                            "searchValue",
+                            e.target.value
+                          )
                         }
-                        style={{ width: "100%", padding: "8px" }}
+                        style={{
+                          width: "100%",
+                          padding: "8px",
+                          boxSizing: "border-box"
+                        }}
                       />
                     </label>
                   </div>
@@ -254,9 +292,17 @@ function IndexOptions() {
                         type="text"
                         value={rule.replaceValue}
                         onChange={(e) =>
-                          updateTransformationRule(index, "replaceValue", e.target.value)
+                          updateTransformationRule(
+                            index,
+                            "replaceValue",
+                            e.target.value
+                          )
                         }
-                        style={{ width: "100%", padding: "8px" }}
+                        style={{
+                          width: "100%",
+                          padding: "8px",
+                          boxSizing: "border-box"
+                        }}
                       />
                     </label>
                   </div>
@@ -273,7 +319,11 @@ function IndexOptions() {
                             parseInt(e.target.value)
                           )
                         }
-                        style={{ width: "100%", padding: "8px" }}
+                        style={{
+                          width: "100%",
+                          padding: "8px",
+                          boxSizing: "border-box"
+                        }}
                       />
                     </label>
                   </div>
@@ -288,13 +338,17 @@ function IndexOptions() {
                   border: "none",
                   borderRadius: "4px",
                   cursor: "pointer"
-                }}
-              >
+                }}>
                 Add Transformation Rule
               </button>
             </div>
 
-            <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                gap: "8px"
+              }}>
               <button
                 onClick={() => {
                   setShowForm(false)
@@ -305,8 +359,7 @@ function IndexOptions() {
                   border: "1px solid #ccc",
                   borderRadius: "4px",
                   cursor: "pointer"
-                }}
-              >
+                }}>
                 Cancel
               </button>
               <button
@@ -318,8 +371,7 @@ function IndexOptions() {
                   border: "none",
                   borderRadius: "4px",
                   cursor: "pointer"
-                }}
-              >
+                }}>
                 Save
               </button>
             </div>
@@ -337,8 +389,7 @@ function IndexOptions() {
             border: "none",
             borderRadius: "4px",
             cursor: "pointer"
-          }}
-        >
+          }}>
           Add New Rule
         </button>
       </div>
@@ -356,9 +407,9 @@ function IndexOptions() {
                   marginBottom: "16px",
                   border: "1px solid #ccc",
                   borderRadius: "4px"
-                }}
-              >
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                }}>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}>
                   <div>
                     <h3>{rule.name}</h3>
                     <p>{rule.description}</p>
@@ -374,15 +425,20 @@ function IndexOptions() {
                         <ul>
                           {rule.transformationRules.map((t, i) => (
                             <li key={i}>
-                              {t.type} on group {t.target}: "{t.searchValue}" → "
-                              {t.replaceValue}"
+                              {t.type} on group {t.target}: "{t.searchValue}" →
+                              "{t.replaceValue}"
                             </li>
                           ))}
                         </ul>
                       </div>
                     )}
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "8px"
+                    }}>
                     <label style={{ display: "flex", alignItems: "center" }}>
                       <input
                         type="checkbox"
@@ -399,8 +455,7 @@ function IndexOptions() {
                         border: "1px solid #ccc",
                         borderRadius: "4px",
                         cursor: "pointer"
-                      }}
-                    >
+                      }}>
                       Edit
                     </button>
                     <button
@@ -411,8 +466,7 @@ function IndexOptions() {
                         borderRadius: "4px",
                         cursor: "pointer",
                         color: "red"
-                      }}
-                    >
+                      }}>
                       Delete
                     </button>
                   </div>

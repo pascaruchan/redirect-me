@@ -10,6 +10,10 @@ A browser extension that allows users to create and manage rules for redirecting
 - Toggle rules on/off easily
 - Simple and intuitive user interface
 
+## Requirements
+- Node.js = v22.14
+- pnpm >= v10.13.1
+
 ## Installation
 
 1. Clone this repository
